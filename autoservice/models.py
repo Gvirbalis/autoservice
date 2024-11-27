@@ -9,6 +9,9 @@ class Automobilo_modelis(models.Model):
     def __str__(self):
         return f'{self.marke} {self.modelis}'
 
+    class Meta:
+        verbose_name_plural = "Automobilio modeliai"
+
 class Automobilis(models.Model):
     valstybinis_nr = models.CharField('Valstybinis_NR', max_length=15,help_text='Iveskite Valstybini nr.(pvz AAA000)')
     automobilio_modelis_id = models.ForeignKey('Automobilo_modelis', on_delete=models.CASCADE, null=False)
@@ -18,14 +21,17 @@ class Automobilis(models.Model):
     def __str__(self):
         return f'Valstybinis NR: {self.valstybinis_nr}   VIN: {self.vin_kodas}   Klientas: {self.klientas}'
 
+    class Meta:
+        verbose_name_plural = "Automobilis"
+
 class Uzsakymas(models.Model):
-    data = models.DateField('Bus sutvarkyta',null=True, blank=True)
+    data = models.DateField('Data',null=True, blank=True)
     automobilis_id = models.ForeignKey('Automobilis', on_delete=models.CASCADE, null=False)
 
     LOAN_STATUS = (
-        ('uzregistruotas', 'Uzregistruota'),
-        ('eileje', 'Eileje'),
-        ('tvarkomas', 'Tvarkoma'),
+        ('Uzregistruotas', 'Uzregistruota'),
+        ('Eileje', 'Eileje'),
+        ('Tvarkomas', 'Tvarkoma'),
         ('Galima atsiimti', 'Galima atsiimti'),
     )
 
@@ -39,8 +45,9 @@ class Uzsakymas(models.Model):
 
     class Meta:
         ordering = ['data']
+        verbose_name_plural = "Uzsakymai"
     def __str__(self):
-        return f'Užsakymas {self.id} ({self.status}) - Automobilis: {self.automobilis_id.valstybinis_nr} VIN:{self.automobilis_id.vin_kodas}'
+        return f'Užsakymo NR.{self.id} ({self.status},{self.data}) - Automobilis: {self.automobilis_id.valstybinis_nr} VIN:{self.automobilis_id.vin_kodas}'
 
 #
 class Uzsakymo_eilute(models.Model):
@@ -58,3 +65,4 @@ class Paslauga(models.Model):
 
     def __str__(self):
         return f'{self.pavadinimas}, Kaina: {self.kaina}'
+
