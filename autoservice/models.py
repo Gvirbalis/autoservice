@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Automobilo_modelis(models.Model):
+class AutomobiloModelis(models.Model):
     marke = models.CharField('Markė', max_length=100,help_text='Iveskite markę (pvz. Ford )')
     modelis = models.CharField('Modelis', max_length=100,help_text='Iveskite modelį (pvz. Focus )')
 
@@ -15,7 +15,7 @@ class Automobilo_modelis(models.Model):
 
 class Automobilis(models.Model):
     valstybinis_nr = models.CharField('Valstybinis_NR', max_length=15,help_text='Iveskite Valstybini nr.(pvz AAA000)')
-    automobilio_modelis_id = models.ForeignKey('Automobilo_modelis', on_delete=models.CASCADE, null=False)
+    automobilio_modelis_id = models.ForeignKey('AutomobiloModelis', on_delete=models.CASCADE, null=False)
     vin_kodas = models.CharField('VIN_Kodas', max_length=17,help_text='Iveskite VIN (pvz.3C6UR5CJXEG146621)')
     klientas = models.CharField('Klientas', max_length=100,help_text='Vardas Pavarde pvz(Juozas Juozaitis)')
 
@@ -64,7 +64,7 @@ class Uzsakymas(models.Model):
         return self.automobilis_id.klientas
     display_automobilis_client.short_description = 'Klientas'
 #
-class Uzsakymo_eilute(models.Model):
+class UzsakymoEilute(models.Model):
     paslauga_id = models.ForeignKey('Paslauga', on_delete=models.CASCADE, null=False)
     uzsakymo_id = models.ForeignKey('Uzsakymas', on_delete=models.CASCADE, null=False)
     kiekis = models.CharField('Kiekis',max_length=250,help_text='Iveskite kieki')

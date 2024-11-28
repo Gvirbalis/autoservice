@@ -1,10 +1,10 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Automobilo_modelis, Automobilis, Uzsakymas,Paslauga,Uzsakymo_eilute
+from .models import AutomobiloModelis, Automobilis, Uzsakymas,Paslauga,UzsakymoEilute
 
 class UzsakymasInline(admin.TabularInline):
-    model = Uzsakymo_eilute
+    model = UzsakymoEilute
     extra = 0
     can_delete = False
 class UzsakymasAdmin(admin.ModelAdmin):
@@ -26,7 +26,7 @@ class PaslaugaAdmin(admin.ModelAdmin):
     list_display = ('pavadinimas','kaina')
 
 admin.site.register(Automobilis,AutomobilisAdmin)
-admin.site.register(Automobilo_modelis)
+admin.site.register(AutomobiloModelis)
 admin.site.register(Uzsakymas,UzsakymasAdmin)
-admin.site.register(Uzsakymo_eilute)
+admin.site.register(UzsakymoEilute)
 admin.site.register(Paslauga,PaslaugaAdmin)
