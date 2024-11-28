@@ -10,7 +10,8 @@ class Automobilo_modelis(models.Model):
         return f'{self.marke} {self.modelis}'
 
     class Meta:
-        verbose_name_plural = "Automobilio modeliai"
+        verbose_name = 'Automobilio Modelis'
+        verbose_name_plural = 'Automobilio modeliai'
 
 class Automobilis(models.Model):
     valstybinis_nr = models.CharField('Valstybinis_NR', max_length=15,help_text='Iveskite Valstybini nr.(pvz AAA000)')
@@ -20,9 +21,13 @@ class Automobilis(models.Model):
 
     def __str__(self):
         return f'Valstybinis NR: {self.valstybinis_nr}   VIN: {self.vin_kodas}   Klientas: {self.klientas}'
+    def display_automobilis_modelis(self):
+        return f'{self.automobilio_modelis_id.marke} {self.automobilio_modelis_id.modelis}'
+    display_automobilis_modelis.short_description = 'Automobilis'
+
 
     class Meta:
-        verbose_name_plural = "Automobilis"
+        verbose_name_plural = "Automobiliai"
 
 class Uzsakymas(models.Model):
     data = models.DateField('Data',null=True, blank=True)
@@ -47,8 +52,17 @@ class Uzsakymas(models.Model):
         ordering = ['data']
         verbose_name_plural = "Uzsakymai"
     def __str__(self):
-        return f'Užsakymo NR.{self.id} ({self.status},{self.data}) - Automobilis: {self.automobilis_id.valstybinis_nr} VIN:{self.automobilis_id.vin_kodas}'
+        return f'Užsakymo NR.{self.id} {self.data} ,Statusas: {self.status} - Automobilis: {self.automobilis_id.valstybinis_nr} VIN:{self.automobilis_id.vin_kodas}'
 
+    def display_automobilis_val_nr(self):
+        return self.automobilis_id.valstybinis_nr
+    display_automobilis_val_nr.short_description = 'Valstybinis NR.'
+    def display_automobilis_vin(self):
+        return self.automobilis_id.vin_kodas
+    display_automobilis_vin.short_description = 'VIN Kodas.'
+    def display_automobilis_client(self):
+        return self.automobilis_id.klientas
+    display_automobilis_client.short_description = 'Klientas'
 #
 class Uzsakymo_eilute(models.Model):
     paslauga_id = models.ForeignKey('Paslauga', on_delete=models.CASCADE, null=False)
@@ -58,6 +72,9 @@ class Uzsakymo_eilute(models.Model):
     def __str__(self):
         return (f'Valstybinis NR: {self.uzsakymo_id.automobilis_id.valstybinis_nr} '
                 f'Paslauga: {self.paslauga_id.pavadinimas} Kiekis: {self.kiekis}')
+    class Meta:
+        verbose_name = 'Uzsakymo eilutes'
+        verbose_name_plural = 'Uzsakymo eilute'
 
 class Paslauga(models.Model):
     pavadinimas = models.CharField('Pavadinimas', max_length=100,help_text='Iveskite paslaugos pavadinima (pvz.Tepalu keitimas)')
@@ -66,3 +83,6 @@ class Paslauga(models.Model):
     def __str__(self):
         return f'{self.pavadinimas}, Kaina: {self.kaina}'
 
+    class Meta:
+        verbose_name = 'Paslauga'
+        verbose_name_plural = 'Paslaugos'
