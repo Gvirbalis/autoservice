@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Kiešos autoservise</h1>
+<p>Sveiki atvyke i Kiešos 500 pinigų autoservisą!</p>
+<p>Statistika serviso:</p>
+<ul>
+    <li><strong>Atliekamų paslaugų kiekis:</strong> {{ paslaugu_kiekis }}</li>
+    <li><strong>Atlikti darbai:</strong> {{ atlikti_uzsakymai }}</li>
+    <li><strong>Automobiliu kiekis:</strong> {{ automobiliu_kiekis }}</li>
+    <li><strong>Uzregistruoti automobiliai darbams:</strong> {{ uzregistruoti_auto }}</li>
+    <li><strong>Tvarkomi siuo metu automobiliai:</strong> {{ tvarkomi_auto }}</li>
+</ul>
+{% endblock %}
