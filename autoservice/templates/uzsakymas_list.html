@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Užsakymų sąrašas</h1>
+{% if uzsakymas_list %}
+<ul>
+    {% for uzsakymas in uzsakymas_list %}
+    <li>
+        <a href="{{ uzsakymas.id }}">Valstybinis NR. : {{ uzsakymas.automobilis_id.valstybinis_nr }} </a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Uzsakymu nėra.</p>
+{% endif %}
+{% endblock %}

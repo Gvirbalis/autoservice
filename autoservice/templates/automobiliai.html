@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Automobiliai</h1>
+<p>Mūsų automobilių sąrašas.</p>
+{% for a in automobiliai %}
+<li><a href="{% url 'automobilis' a.id %}">Valstybinis nr. {{a.valstybinis_nr}} Modelis/Marke:
+    {{a.automobilio_modelis_id}}</li>
+{% endfor %}
+{% endblock %}

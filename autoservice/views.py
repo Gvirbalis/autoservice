@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.views import generic
+
 from .models import AutomobiloModelis, Automobilis, Uzsakymas, UzsakymoEilute, Paslauga
 
 
@@ -22,4 +24,28 @@ def index(request):
     # renderiname index.html, su duomenimis kintamąjame context
     return render(request, 'index.html', context=context)
 
-# Create your views here.
+
+def automobiliai(request):
+    automobiliai = Automobilis.objects.all()
+    context = {
+        'automobiliai': automobiliai
+    }
+    # print(automobiliai)
+    return render(request, 'automobiliai.html', context=context)
+
+
+def automobilis(request, automobilis_id):
+    single_automobilis = get_object_or_404(Automobilis, pk=automobilis_id)
+    # print(single_automobilis)
+    return render(request, 'automobilis.html', {'automobilis': single_automobilis})
+
+
+class UzsakymasListView(generic.ListView):
+    model = Uzsakymas
+    template_name = 'uzsakymas_list.html'
+    # queryset = Uzsakymas.objects.filter(status__in=['eileje', 'tvarkomas','uzregistruotas','galima atsiimti'])
+
+
+class UzsakymasDetailView(generic.DetailView):
+    model = Uzsakymas
+    template_name = 'uzsakymas_detail.html'

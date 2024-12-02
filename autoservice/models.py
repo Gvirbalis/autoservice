@@ -15,7 +15,7 @@ class AutomobiloModelis(models.Model):
 
 class Automobilis(models.Model):
     valstybinis_nr = models.CharField('Valstybinis_NR', max_length=15, help_text='Iveskite Valstybini nr.(pvz AAA000)')
-    automobilio_modelis_id = models.ForeignKey('AutomobiloModelis', on_delete=models.CASCADE, null=False)
+    automobilio_modelis_id = models.ForeignKey('AutomobiloModelis', on_delete=models.CASCADE, null=False,related_name='automobiliomodelis')
     vin_kodas = models.CharField('VIN_Kodas', max_length=17, help_text='Iveskite VIN (pvz.3C6UR5CJXEG146621)')
     klientas = models.CharField('Klientas', max_length=100, help_text='Vardas Pavarde pvz(Juozas Juozaitis)')
 

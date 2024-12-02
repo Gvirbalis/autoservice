@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h5>Valstybinis nr. {{ uzsakymas.automobilis_id.valstybinis_nr }}</h5>
+<p><strong>Data: </strong> {{ uzsakymas.data }}</p>
+<p><strong>VIN: </strong>{{ uzsakymas.automobilis_id.vin_kodas }}</p>
+<p><strong>Modelis/Marke: </strong>{{ uzsakymas.automobilis_id.automobilio_modelis_id }}</p>
+<p><strong>Klientas: </strong>{{ uzsakymas.automobilis_id.klientas }}</p>
+<h4>Paslaugos:</h4>
+{% for eilute in uzsakymas.uzsakymoeilute_set.all %}
+<div style="margin-left:20px;margin-top:20px">
+  <p><strong>Paslauga:</strong> {{ eilute.paslauga_id.pavadinimas }} </p>
+  <p><strong>Kaina</strong> {{ eilute.paslauga_id.kaina }} €</p>
+  <p><strong>Kiekis:</strong> {{ eilute.kiekis }}</p>
+</div>
+{% endfor %}
+{% endblock %}
