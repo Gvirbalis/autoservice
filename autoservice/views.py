@@ -1,3 +1,5 @@
+from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.views import generic
@@ -26,7 +28,9 @@ def index(request):
 
 
 def automobiliai(request):
-    automobiliai = Automobilis.objects.all()
+    paginator = Paginator(Automobilis.objects.all().order_by('id'), 2)
+    page_number = request.GET.get('page')
+    automobiliai = paginator.get_page(page_number)
     context = {
         'automobiliai': automobiliai
     }
@@ -42,6 +46,7 @@ def automobilis(request, automobilis_id):
 
 class UzsakymasListView(generic.ListView):
     model = Uzsakymas
+    paginate_by = 3
     template_name = 'uzsakymas_list.html'
     # queryset = Uzsakymas.objects.filter(status__in=['eileje', 'tvarkomas','uzregistruotas','galima atsiimti'])
 
@@ -49,3 +54,17 @@ class UzsakymasListView(generic.ListView):
 class UzsakymasDetailView(generic.DetailView):
     model = Uzsakymas
     template_name = 'uzsakymas_detail.html'
+
+def search(request):
+    """
+    paprasta paieška. query ima informaciją iš paieškos laukelio,
+    search_results prafiltruoja pagal įvestą tekstą knygų pavadinimus ir aprašymus.
+    Icontains nuo contains skiriasi tuo, kad icontains ignoruoja ar raidės
+    didžiosios/mažosios.
+    """
+    query = request.GET.get('query')
+    search_results = Automobilis.objects.filter(Q(valstybinis_nr__icontains=query)
+                                                | Q(vin_kodas__icontains=query) | Q(klientas__icontains=query)
+                                                | Q(automobilio_modelis_id__marke__icontains=query)
+                                                | Q(automobilio_modelis_id__modelis__icontains=query))
+    return render(request, 'search.html', {'automobiliai': search_results, 'query': query})

@@ -25,7 +25,7 @@ class AutomobilisAdmin(admin.ModelAdmin):
     search_fields = ('valstybinis_nr', 'vin_kodas', 'klientas')
 
     fieldsets = (
-        ('Automobilio Info', {'fields': ('valstybinis_nr', 'automobilio_modelis_id', 'vin_kodas')}),
+        ('Automobilio Info', {'fields': ('valstybinis_nr', 'automobilio_modelis_id', 'vin_kodas','cover')}),
         ('Klientas', {'fields': ('klientas',)}),
     )
 

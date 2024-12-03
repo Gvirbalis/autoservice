@@ -6,6 +6,7 @@
 <p><strong>VIN: </strong>{{ uzsakymas.automobilis_id.vin_kodas }}</p>
 <p><strong>Modelis/Marke: </strong>{{ uzsakymas.automobilis_id.automobilio_modelis_id }}</p>
 <p><strong>Klientas: </strong>{{ uzsakymas.automobilis_id.klientas }}</p>
+<p><strong>Statusas: </strong>{{ uzsakymas.status }}</p>
 <h4>Paslaugos:</h4>
 {% for eilute in uzsakymas.uzsakymoeilute_set.all %}
 <div style="margin-left:20px;margin-top:20px">

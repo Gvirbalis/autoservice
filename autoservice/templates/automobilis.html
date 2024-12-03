@@ -1,8 +1,13 @@
 {% extends "base.html" %}
-
+ {% load static %}
 {% block content %}
 <div class="container automobilis">
     <h5>Automobilis: {{ automobilis.automobilio_modelis_id }}</h5>
+    {% if automobilis.cover %}
+    <img src="{{ automobilis.cover.url }}" style="margin-bottom: 20px;">
+    {% else %}
+    <img src="{% static 'img/no-image.jpg' %}" style="margin-bottom: 20px;">
+    {% endif %}
     <hr/>
     <p>Klientas: {{ automobilis.klientas }}</p>
     <p>Automobilio modelis: {{ automobilis.automobilio_modelis_id }}</p>

@@ -1,29 +1,34 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% block title %}<title>Kiešos autoservise!</title>{% endblock %}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  {% block title %}<title>Kiešos autoservise</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- Add additional CSS in static file -->
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-2">
-            {% block sidebar %}
-            <ul class="sidebar-nav">
-                <li><a href="{% url 'index' %}">Pradžia</a></li>
-                <li><a href="{% url 'automobiliai' %}">Visi automobiliai</a></li>
-                <li><a href="{% url 'uzsakymas' %}">Uzsakymai</a></li>
-            </ul>
-            {% endblock %}
-        </div>
-        <div class="col-sm-10 ">{% block content %}{% endblock %}</div>
-    </div>
-</div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand">Kiešos autoservise</a>
+        <ul class="navbar-nav mx-2">
+          <li class="nav-item active"><a class="nav-link" href="{% url 'index' %}">Pradžia</a></li>
+          <li class="nav-item active"><a class="nav-link" href="{% url 'automobiliai' %}">Visi automobiliai</a></li>
+          <li class="nav-item active"><a class="nav-link" href="{% url 'uzsakymas' %}">Uzsakymai</a></li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}" method="get">
+          <input class="form-control me-2" name="query" class="form-control" type="text" placeholder="Paieška">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+      <div class="col-sm-10 ">
+        {% block content %}
+        {% endblock %}
+      </div>
 </body>
 </html>
