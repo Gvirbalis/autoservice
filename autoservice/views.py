@@ -2,6 +2,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.template.context_processors import request
 from django.views import generic
 
 from .models import AutomobiloModelis, Automobilis, Uzsakymas, UzsakymoEilute, Paslauga
@@ -13,6 +14,8 @@ def index(request):
     automobiliu_kiekis = Automobilis.objects.all().count()
     uzregistruoti_auto = Uzsakymas.objects.filter(status__exact='uzregistruotas').count()
     tvarkomi_auto = Uzsakymas.objects.filter(status__in=['eileje', 'tvarkomas']).count()
+    num_visits = request.session.get('num_visits', 1)
+    request.session['num_visits'] = num_visits + 1
 
     # # perduodame informaciją į šabloną žodyno pavidale:
     context = {
@@ -21,6 +24,7 @@ def index(request):
         'automobiliu_kiekis': automobiliu_kiekis,
         'uzregistruoti_auto': uzregistruoti_auto,
         'tvarkomi_auto': tvarkomi_auto,
+        'num_visits': num_visits,
     }
 
     # renderiname index.html, su duomenimis kintamąjame context
@@ -68,3 +72,6 @@ def search(request):
                                                 | Q(automobilio_modelis_id__marke__icontains=query)
                                                 | Q(automobilio_modelis_id__modelis__icontains=query))
     return render(request, 'search.html', {'automobiliai': search_results, 'query': query})
+
+def about(request):
+    return render(request, 'about.html')

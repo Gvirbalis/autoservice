@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+from django.conf.global_settings import LOGOUT_REDIRECT_URL
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -128,3 +130,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'autoservice/media')
 
 MEDIA_URL = '/media/'
 # print(MEDIA_ROOT) - nevenkite padebuginti, bus lengviau nepasiklysti django filesystem džiunglėse
+
+LOGIN_REDIRECT_URL = '/'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'mail.inbox.lt'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'kiesa.autoservice@inbox.lt'
+EMAIL_HOST_PASSWORD = 'EvRC?74Mex'
+DEFAULT_FROM_EMAIL = 'kiesa.autoservice@inbox.lt'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+SERVER_EMAIL = 'admin@kiesa.autoservice.lt'

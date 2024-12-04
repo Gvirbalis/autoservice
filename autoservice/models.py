@@ -18,7 +18,7 @@ class Automobilis(models.Model):
     automobilio_modelis_id = models.ForeignKey('AutomobiloModelis', on_delete=models.CASCADE, null=False,related_name='automobiliomodelis')
     vin_kodas = models.CharField('VIN_Kodas', max_length=17, help_text='Iveskite VIN (pvz.3C6UR5CJXEG146621)')
     klientas = models.CharField('Klientas', max_length=100, help_text='Vardas Pavarde pvz(Juozas Juozaitis)')
-    cover = models.ImageField('Viršelis', upload_to='covers', null=True)
+    cover = models.ImageField('Viršelis', upload_to='covers', null=True,blank=True)
 
     def __str__(self):
         return f'Valstybinis NR: {self.valstybinis_nr}   VIN: {self.vin_kodas}   Klientas: {self.klientas}'
