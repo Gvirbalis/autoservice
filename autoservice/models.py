@@ -1,4 +1,8 @@
+from datetime import date
+
+from django.contrib.auth.models import User
 from django.db import models
+from tinymce.models import HTMLField
 
 
 class AutomobiloModelis(models.Model):
@@ -18,6 +22,7 @@ class Automobilis(models.Model):
     automobilio_modelis_id = models.ForeignKey('AutomobiloModelis', on_delete=models.CASCADE, null=False,related_name='automobiliomodelis')
     vin_kodas = models.CharField('VIN_Kodas', max_length=17, help_text='Iveskite VIN (pvz.3C6UR5CJXEG146621)')
     klientas = models.CharField('Klientas', max_length=100, help_text='Vardas Pavarde pvz(Juozas Juozaitis)')
+    aprasymas = HTMLField('Aprasymas',help_text='Aprasymas',null=True)
     cover = models.ImageField('Viršelis', upload_to='covers', null=True,blank=True)
 
     def __str__(self):
@@ -35,6 +40,14 @@ class Automobilis(models.Model):
 class Uzsakymas(models.Model):
     data = models.DateField('Data', null=True, blank=True)
     automobilis_id = models.ForeignKey('Automobilis', on_delete=models.CASCADE, null=False)
+    bus_sutvarkyta = models.DateField('Bus sutvarkyta', null=True, blank=True)
+    savininkas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    @property
+    def is_overdue(self):
+        if self.bus_sutvarkyta and date.today() > self.bus_sutvarkyta:
+            return True
+        return False
 
     LOAN_STATUS = (
         ('uzregistruotas', 'Uzregistruota'),
@@ -53,7 +66,7 @@ class Uzsakymas(models.Model):
     )
 
     class Meta:
-        ordering = ['data']
+        ordering = ['bus_sutvarkyta']
         verbose_name_plural = "Uzsakymai"
 
     def __str__(self):

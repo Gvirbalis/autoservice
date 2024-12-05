@@ -12,10 +12,10 @@ class UzsakymasInline(admin.TabularInline):
 
 class UzsakymasAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'data', 'status', 'display_automobilis_val_nr','display_automobilis_marke' ,
+        'id', 'data', 'status','bus_sutvarkyta' ,'savininkas','display_automobilis_val_nr','display_automobilis_marke' ,
         'display_automobilis_vin', 'display_automobilis_client')
     inlines = [UzsakymasInline]
-    list_filter = ('data', 'status')
+    list_filter = ('bus_sutvarkyta','data', 'status')
     list_editable = ('status',)
 
 
@@ -25,7 +25,7 @@ class AutomobilisAdmin(admin.ModelAdmin):
     search_fields = ('valstybinis_nr', 'vin_kodas', 'klientas')
 
     fieldsets = (
-        ('Automobilio Info', {'fields': ('valstybinis_nr', 'automobilio_modelis_id', 'vin_kodas','cover')}),
+        ('Automobilio Info', {'fields': ('valstybinis_nr', 'automobilio_modelis_id', 'vin_kodas','cover','aprasymas')}),
         ('Klientas', {'fields': ('klientas',)}),
     )
 

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Mano automobiliai</h1>
+
+    {% if uzsakymas_list %}
+    <ul>
+
+      {% for uzsakymas in uzsakymas_list %}
+      <li class="{% if uzsakymas.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'uzsakymas-detail' uzsakymas.pk %}">Automobilis: {{uzsakymas.automobilis_id.valstybinis_nr}} {{uzsakymas.automobilis_id.automobilio_modelis_id}}</a> Numatoma data: {{ uzsakymas.bus_sutvarkyta }}
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>Šiuo metu neturite užregitruotų automobilių pas mus</p>
+    {% endif %}       
+{% endblock %}
+
+

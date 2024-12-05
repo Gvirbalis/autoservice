@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
@@ -50,9 +51,10 @@ def automobilis(request, automobilis_id):
 
 class UzsakymasListView(generic.ListView):
     model = Uzsakymas
-    paginate_by = 3
+    paginate_by = 4
     template_name = 'uzsakymas_list.html'
     # queryset = Uzsakymas.objects.filter(status__in=['eileje', 'tvarkomas','uzregistruotas','galima atsiimti'])
+
 
 
 class UzsakymasDetailView(generic.DetailView):
@@ -75,3 +77,12 @@ def search(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+class LoanedUzsakymaiByUserListView(LoginRequiredMixin, generic.ListView):
+    model = Uzsakymas
+    template_name = 'user_uzsakymai.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Uzsakymas.objects.filter(savininkas=self.request.user).filter(status__in=['eileje', 'tvarkomas','uzregistruotas','galima atsiimti']).order_by('bus_sutvarkyta')
