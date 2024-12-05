@@ -4,9 +4,8 @@
 
 2.How to make it work:
 
-First u need install library's at Terminal:
-    $pip install Django
-    $pip install pillow
+First u need check requiments.txt for make sure all librarys installed.
+
 Second create database at Terminal:
     $python manage.py makemigrations
     $python manage.py migrate
