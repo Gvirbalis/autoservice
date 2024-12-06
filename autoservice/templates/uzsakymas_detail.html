@@ -14,5 +14,27 @@
   <p><strong>Kaina</strong> {{ eilute.paslauga_id.kaina }} €</p>
   <p><strong>Kiekis:</strong> {{ eilute.kiekis }}</p>
 </div>
+</br>
+  <h4>Atsiliepimai:</h4>
+  {% if uzsakymas.uzsakymasreview_set.all %}
+    {% for review in uzsakymas.uzsakymasreview_set.all %}
+      <hr>
+      Vartotojas: <strong>{{ review.reviewer }}  </strong>, <em>Data: {{ review.date_created}}</em>
+      <p>{{ review.content }}</p>
+    {% endfor %}
+  {% else %}
+    <p>Užsakymas neturi atsiliepimų</p>
+  {% endif %}
+{% if user.is_authenticated %}
+  <div class="fieldWrapper">
+    <hr><br/>
+    <h4>Palikite atsiliepimą:</h4>
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form.content }}</br>
+      <input type="submit" value="Išsaugoti">
+    </form>
+  </div>
+  {% endif %}
 {% endfor %}
 {% endblock %}

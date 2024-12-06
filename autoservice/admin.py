@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import AutomobiloModelis, Automobilis, Uzsakymas, Paslauga, UzsakymoEilute
+from .models import AutomobiloModelis, Automobilis, Uzsakymas, Paslauga, UzsakymoEilute, UzsakymasReview, Akcijos
 
 
 class UzsakymasInline(admin.TabularInline):
@@ -28,14 +28,21 @@ class AutomobilisAdmin(admin.ModelAdmin):
         ('Automobilio Info', {'fields': ('valstybinis_nr', 'automobilio_modelis_id', 'vin_kodas','cover','aprasymas')}),
         ('Klientas', {'fields': ('klientas',)}),
     )
+class UzsakymasReviewAdmin(admin.ModelAdmin):
+    list_display = ('uzsakymas', 'date_created', 'reviewer', 'content')
+
 
 
 class PaslaugaAdmin(admin.ModelAdmin):
     list_display = ('pavadinimas', 'kaina')
 
+class AkcijosAdmin(admin.ModelAdmin):
+    list_display = ('data','aprasymas')
 
+admin.site.register(Akcijos, AkcijosAdmin)
 admin.site.register(Automobilis, AutomobilisAdmin)
 admin.site.register(AutomobiloModelis)
 admin.site.register(Uzsakymas, UzsakymasAdmin)
 admin.site.register(UzsakymoEilute)
 admin.site.register(Paslauga, PaslaugaAdmin)
+admin.site.register(UzsakymasReview, UzsakymasReviewAdmin)

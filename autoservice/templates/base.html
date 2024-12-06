@@ -39,7 +39,7 @@
       </li>
       {% else %}
       <li class="nav-item"><a class="btn" href="{% url 'login'%}">Prisijungti</a></li>
-      <li class="nav-item"><a class="btn" href="#">Registruotis</a></li>
+      <li class="nav-item"><a class="btn" href="{% url 'register'%}">Registruotis</a></li>
       {% endif %}
       <li class="nav-item active"><a class="btn" href="{% url 'index' %}">Pradžia</a></li>
       <li class="nav-item active"><a class="btn" href="{% url 'automobiliai' %}">Visi automobiliai</a></li>
@@ -56,5 +56,12 @@
   {% block content %}
   {% endblock %}
 </div>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'info' %}success{% endif %}" role="alert">
+                {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 </body>
 </html>

@@ -120,3 +120,20 @@ class Paslauga(models.Model):
     class Meta:
         verbose_name = 'Paslauga'
         verbose_name_plural = 'Paslaugos'
+
+
+class UzsakymasReview(models.Model):
+    uzsakymas = models.ForeignKey('Uzsakymas', on_delete=models.SET_NULL, null=True, blank=True)
+    reviewer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    content = models.TextField('Atsiliepimas', max_length=2000)
+
+    class Meta:
+        verbose_name = "Atsiliepimas"
+        verbose_name_plural = 'Atsiliepimai'
+        ordering = ['-date_created']
+
+
+class Akcijos(models.Model):
+    data = models.DateField('Data', null=True, blank=True)
+    aprasymas = HTMLField('Aprasymas', help_text='Aprasymas', null=True)
