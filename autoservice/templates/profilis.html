@@ -16,6 +16,7 @@
           <p class="text-secondary">Email: {{ user.email }}</p>
             <p class="text-secondary"> Last login: {{ user.last_login }}</p>
             <p class="text-secondary"> Profile created: {{ user.date_joined }}</p>
+            <p>Jeigu norite grįžti <a href="{% url 'main'%}"><strong>Spauskite čia!</strong></a></p>
         </div>
       </div>
        <form method="POST" enctype="multipart/form-data">

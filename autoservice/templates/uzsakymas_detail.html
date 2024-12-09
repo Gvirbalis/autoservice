@@ -19,7 +19,9 @@
   {% if uzsakymas.uzsakymasreview_set.all %}
     {% for review in uzsakymas.uzsakymasreview_set.all %}
       <hr>
-      Vartotojas: <strong>{{ review.reviewer }}  </strong>, <em>Data: {{ review.date_created}}</em>
+
+       <img class="rounded-circle" src="{{review.reviewer.profilis.nuotrauka.url}}"width="100" height="75">
+      <strong>{{ review.reviewer }}  </strong>, <em>Data: {{ review.date_created}}</em>
       <p>{{ review.content }}</p>
     {% endfor %}
   {% else %}

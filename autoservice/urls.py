@@ -14,4 +14,5 @@ urlpatterns = [
     path('manoautomobiliai/', views.LoanedUzsakymaiByUserListView.as_view(), name='mano-uzsakymai'),
     path('register/', views.register, name='register'),
     path('profilis/', views.profilis, name='profilis'),
+    path('main/', views.profilis2, name='main'),
 ]

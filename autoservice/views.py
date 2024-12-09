@@ -175,4 +175,6 @@ def profilis(request):
     return render(request, 'profilis.html', context)
 
 
-
+@login_required
+def profilis2(request):
+    return render(request, 'main.html')
