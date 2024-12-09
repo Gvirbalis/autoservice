@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import AutomobiloModelis, Automobilis, Uzsakymas, Paslauga, UzsakymoEilute, UzsakymasReview, Akcijos
+from .models import AutomobiloModelis, Automobilis, Uzsakymas, Paslauga, UzsakymoEilute, UzsakymasReview, Akcijos, \
+    Profilis
 
 
 class UzsakymasInline(admin.TabularInline):
@@ -12,10 +13,11 @@ class UzsakymasInline(admin.TabularInline):
 
 class UzsakymasAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'data', 'status','bus_sutvarkyta' ,'savininkas','display_automobilis_val_nr','display_automobilis_marke' ,
+        'id', 'data', 'status', 'bus_sutvarkyta', 'savininkas', 'display_automobilis_val_nr',
+        'display_automobilis_marke',
         'display_automobilis_vin', 'display_automobilis_client')
     inlines = [UzsakymasInline]
-    list_filter = ('bus_sutvarkyta','data', 'status')
+    list_filter = ('bus_sutvarkyta', 'data', 'status')
     list_editable = ('status',)
 
 
@@ -25,20 +27,24 @@ class AutomobilisAdmin(admin.ModelAdmin):
     search_fields = ('valstybinis_nr', 'vin_kodas', 'klientas')
 
     fieldsets = (
-        ('Automobilio Info', {'fields': ('valstybinis_nr', 'automobilio_modelis_id', 'vin_kodas','cover','aprasymas')}),
+        ('Automobilio Info',
+         {'fields': ('valstybinis_nr', 'automobilio_modelis_id', 'vin_kodas', 'cover', 'aprasymas')}),
         ('Klientas', {'fields': ('klientas',)}),
     )
+
+
 class UzsakymasReviewAdmin(admin.ModelAdmin):
     list_display = ('uzsakymas', 'date_created', 'reviewer', 'content')
-
 
 
 class PaslaugaAdmin(admin.ModelAdmin):
     list_display = ('pavadinimas', 'kaina')
 
-class AkcijosAdmin(admin.ModelAdmin):
-    list_display = ('data','aprasymas')
 
+class AkcijosAdmin(admin.ModelAdmin):
+    list_display = ('data', 'aprasymas')
+
+admin.site.register(Profilis)
 admin.site.register(Akcijos, AkcijosAdmin)
 admin.site.register(Automobilis, AutomobilisAdmin)
 admin.site.register(AutomobiloModelis)

@@ -1,4 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-<p>ssdasddsa</p>
+    {% if akcijos %}
+        {% for akcija in akcijos %}
+            <div class="akcija container">
+                <p class="data"><strong>Data:</strong> {{ akcija.data }}</p>
+                <div class="aprasymas">
+                    <div>
+                        {{ akcija.aprasymas|safe }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Nėra akcijų.</p>
+    {% endif %}
 {% endblock %}

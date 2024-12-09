@@ -1,5 +1,5 @@
 from datetime import date
-
+from PIL import Image
 from django.contrib.auth.models import User
 from django.db import models
 from tinymce.models import HTMLField
@@ -19,14 +19,23 @@ class AutomobiloModelis(models.Model):
 
 class Automobilis(models.Model):
     valstybinis_nr = models.CharField('Valstybinis_NR', max_length=15, help_text='Iveskite Valstybini nr.(pvz AAA000)')
-    automobilio_modelis_id = models.ForeignKey('AutomobiloModelis', on_delete=models.CASCADE, null=False,related_name='automobiliomodelis')
+    automobilio_modelis_id = models.ForeignKey('AutomobiloModelis', on_delete=models.CASCADE, null=False,
+                                               related_name='automobiliomodelis')
     vin_kodas = models.CharField('VIN_Kodas', max_length=17, help_text='Iveskite VIN (pvz.3C6UR5CJXEG146621)')
     klientas = models.CharField('Klientas', max_length=100, help_text='Vardas Pavarde pvz(Juozas Juozaitis)')
-    aprasymas = HTMLField('Aprasymas',help_text='Aprasymas',null=True)
-    cover = models.ImageField('Viršelis', upload_to='covers', null=True,blank=True)
+    aprasymas = HTMLField('Aprasymas', help_text='Aprasymas', null=True)
+    cover = models.ImageField('Viršelis', upload_to='covers', null=True, blank=True)
 
     def __str__(self):
         return f'Valstybinis NR: {self.valstybinis_nr}   VIN: {self.vin_kodas}   Klientas: {self.klientas}'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.cover.path)
+        if img.height > 225 or img.width > 400:
+            output_size = (400, 225)
+            img.thumbnail(output_size)
+            img.save(self.cover.path)
 
     def display_automobilis_modelis(self):
         return f'{self.automobilio_modelis_id.marke} {self.automobilio_modelis_id.modelis}'
@@ -93,6 +102,7 @@ class Uzsakymas(models.Model):
 
     display_automobilis_marke.short_description = 'Gamintojas/Marke'
 
+
 #
 class UzsakymoEilute(models.Model):
     paslauga_id = models.ForeignKey('Paslauga', on_delete=models.CASCADE, null=False)
@@ -137,3 +147,20 @@ class UzsakymasReview(models.Model):
 class Akcijos(models.Model):
     data = models.DateField('Data', null=True, blank=True)
     aprasymas = HTMLField('Aprasymas', help_text='Aprasymas', null=True)
+
+
+class Profilis(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nuotrauka = models.ImageField(default="profile_pics/no-image.jpg", upload_to="profile_pics")
+
+    def __str__(self):
+        return f"{self.user.username} profilis"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.nuotrauka.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.nuotrauka.path)
+

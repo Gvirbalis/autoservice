@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
@@ -11,7 +12,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic.edit import FormMixin
 
-from .forms import UzsakymasReviewForm
+from .forms import UzsakymasReviewForm, UserUpdateForm, ProfilisUpdateForm
 from .models import AutomobiloModelis, Automobilis, Uzsakymas, UzsakymoEilute, Paslauga, Akcijos
 
 
@@ -147,4 +148,31 @@ def register(request):
 
 
 def akcijos(request):
-    return render(request, 'akcijos.html')
+    akcijos = Akcijos.objects.all()
+    context = {
+        'akcijos': akcijos
+    }
+    return render(request, 'akcijos.html', context=context)
+
+@login_required
+def profilis(request):
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfilisUpdateForm(request.POST, request.FILES, instance=request.user.profilis)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f"Profilis atnaujintas")
+            return redirect('profilis')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfilisUpdateForm(instance=request.user.profilis)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form,
+    }
+    return render(request, 'profilis.html', context)
+
+
+
