@@ -23,6 +23,7 @@ class UserUpdateForm(forms.ModelForm):
         self.fields['first_name'].label = "Vardas"
         self.fields['last_name'].label = "Pavardė"
         self.fields['username'].help_text = "Pakeitus username, nepamirškite pasikeist ir jungiantis Jūsų username!"
+        self.fields['email'].help_text = "Įsitikinkite, kad suvedėte galiojantį el.pašta, kitu atvėju negalėsite susigražinti slaptažodžio!"
 
 
 class ProfilisUpdateForm(forms.ModelForm):
