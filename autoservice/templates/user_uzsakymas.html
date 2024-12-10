@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Mano užsakymas:</h1>
+    <hr>
+        <ul>
+        <img class="rounded-circle" src="{{uzsakymas.savininkas.profilis.nuotrauka.url}}" width="100" height="75">
+        <li><strong class="{% if object.is_overdue %}text-danger{% endif %}">Pavadinimas: {{uzsakymas.automobilis_id.valstybinis_nr}}</strong></li>
+        <li><strong>Sutvarkymo terminas:</strong> {{object.bus_sutvarkyta}}</li>
+        <br/>
+           <li><strong>Gražinimo terminas:</strong> {{object.bus_sutvarkyta}}</li>
+            {% if object.savininkas == user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'mano-uzsakymas-update' object.id %}">Redaguoti</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'mano-uzsakymas-delete' object.id %}">Ištrinti</a>
+            </div>
+            {% endif %}
+      </li>
+    </ul>
+{% endblock %}

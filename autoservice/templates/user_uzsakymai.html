@@ -7,9 +7,11 @@
     <ul>
 
       {% for uzsakymas in uzsakymas_list %}
-         <img class="rounded-circle" src="{{uzsakymas.savininkas.profilis.nuotrauka.url}}"width="100" height="75">
+         <img class="rounded-circle" src="{{uzsakymas.savininkas.profilis.nuotrauka.url}}" width="100" height="75">
         <li class="{% if uzsakymas.is_overdue %}text-danger{% endif %}">
         <a href="{% url 'uzsakymas-detail' uzsakymas.pk %}">Automobilis: {{uzsakymas.automobilis_id.valstybinis_nr}} {{uzsakymas.automobilis_id.automobilio_modelis_id}}</a> Numatoma data: {{ uzsakymas.bus_sutvarkyta }}
+        <br/>
+        <a class="btn" href="{{ uzsakymas.pk }}" role="button">Peržiūrėti</a>
       </li>
       {% endfor %}
     </ul>
